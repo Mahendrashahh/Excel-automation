@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Upload Excel Files</title>
+    <style>
+        body {
+            position: relative;
+            text-align: center;
+            font-family: sans-serif;
+            background: linear-gradient(135deg, #2e8b57 0%, #e0eafc 100%, #cfdef3 100%);
+            background-size: cover;
+            overflow-x: hidden;
+        }
+
+        .nav {
+            margin-top: -19px;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("{{ url_for('static', filename='img/xl bg.png') }}") center center/cover no-repeat;
+            opacity: 0.4;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .container {
+
+            border: solid black 4px;
+            border-radius: 22px;
+            width: 40vw;
+            background: lightblue;
+            margin-inline: auto;
+            margin-top: 165px;
+            height: 230px;
+            padding: 10px;
+
+        }
+
+        h2 {
+            margin-bottom: 26px;
+            border: solid #333 1px;
+            border-radius: 12px;
+            width: 26vw;
+            margin-left: 85px;
+            margin-top: 5px;
+        }
+
+        #operation {
+            border-radius: 15px;
+            height: 28px;
+            text-align: center;
+            cursor: pointer;
+            background: antiquewhite;
+            border: 2px solid #333;
+            font-size: 14px;
+            padding: 4px 10px;
+            margin-top: 39px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border-radius: 23px;
+            margin-top: 15px;
+            background: aquamarine;
+            border: solid #333 2px;
+            cursor: pointer;
+        }
+
+        .file-label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 14px;
+            margin-top: -12px;
+
+            margin-top: -17px;
+        }
+
+        input[type="file"] {
+            margin-bottom: -10px;
+            height: 20px;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+            width: 11vw;
+            border: solid #333 2px;
+            margin-top: -5px;
+        }
+
+        .custom-file-label {
+            display: inline-block;
+            padding: 10px 20px;
+            background: aquamarine;
+            color: #333;
+            border-radius: 25px;
+            border: solid #333 2px;
+            cursor: pointer;
+            margin-bottom: -17px;
+        }
+
+        /* From Uiverse.io by gharsh11032000 */
+        .animated-button {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 16px 36px;
+            border: 4px solid;
+            border-color: transparent;
+            font-size: 16px;
+            background-color: inherit;
+            border-radius: 100px;
+            font-weight: 600;
+            color: black;
+            box-shadow: 0 0 0 2px greenyellow;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            margin-left: 200px;
+            margin-top: 1px;
+            height: 30px;
+        }
+
+        .animated-button svg {
+            position: absolute;
+            width: 24px;
+            fill: greenyellow;
+            z-index: 9;
+            transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .animated-button .arr-1 {
+            right: 16px
+        }
+
+        .animated-button .arr-2 {
+            left: -25%;
+        }
+
+        .animated-button .circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background-color: greenyellow;
+            border-radius: 50%;
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .animated-button .text {
+            position: relative;
+            z-index: 1;
+            transform: translateX(-12px);
+            transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .animated-button:hover {
+            box-shadow: 0 0 0 12px transparent;
+            color: #212121;
+            border-radius: 12px;
+        }
+
+        .animated-button:hover .arr-1 {
+            right: -25%;
+        }
+
+        .animated-button:hover .arr-2 {
+            left: 16px;
+        }
+
+        .animated-button:hover .text {
+            transform: translateX(12px);
+        }
+
+        .animated-button:hover svg {
+            fill: #212121;
+        }
+
+        .animated-button:active {
+            scale: 0.95;
+            box-shadow: 0 0 0 4px greenyellow;
+        }
+
+        .animated-button:hover .circle {
+            width: 220px;
+            height: 220px;
+            opacity: 1;
+        }
+
+        /* loadre css*/
+        #div1 {
+            width: 100%;
+            background: transparent;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            display: none;
+        }
+
+        @keyframes animateHeight {
+            0% {
+                height: 0px;
+            }
+
+            50% {
+                height: 50px;
+            }
+        }
+
+        #l,
+        #m {
+            width: 150px;
+            height: 70px;
+            position: relative;
+            overflow: hidden;
+            background-color: black;
+            border-radius: 0px 200px 0px 200px;
+            -moz-border-radius: 0px 200px 0px 200px;
+            -webkit-border-radius: 0px 200px 0px 200px;
+            border: 1px solid transparent;
+            animation: animateHeight 1s infinite alternate-reverse;
+        }
+
+        #m {
+            border-radius: 200px 0px 200px 0px;
+            -moz-border-radius: 200px 0px 200px 0px;
+            -webkit-border-radius: 200px 0px 200px 0px;
+        }
+
+        .pupil,
+        .pupl2,
+        .pupil3,
+        .pupil4,
+        .p5 {
+            overflow: hidden;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.158);
+        }
+
+        .pupil3,
+        .pupil4 {
+            width: 18px;
+            height: 3.5px;
+            overflow: visible;
+        }
+
+        .pupil {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(rgb(255, 105, 105),
+                    rgb(129, 249, 129),
+                    rgb(96, 96, 255),
+                    rgb(71, 71, 71));
+        }
+
+        .pupl2 {
+            width: 25px;
+            height: 25px;
+            background: linear-gradient(rgb(255, 2, 2),
+                    rgb(0, 255, 0),
+                    rgb(0, 0, 255),
+                    rgb(0, 0, 0));
+        }
+
+        .p5 {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(rgb(252, 71, 71),
+                    rgb(70, 249, 70),
+                    rgb(63, 63, 254),
+                    rgb(48, 47, 47));
+        }
+
+        .pupil3 {
+            width: 5px;
+            height: 18px;
+        }
+
+        h1 {
+            background-color: #2e8b57;
+            color: #fff;
+            padding: 0;
+            border-radius: 10px;
+            margin-bottom: 0;
+            margin-top: 0;
+        }
+
+        nav {
+            background: #2e8b57;
+            color: #fff;
+            padding: 8px 0 4px 0;
+            border-radius: 10px;
+            margin-bottom: 24px;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+            margin-top: 0;
+            min-height: unset;
+        }
+
+        footer {
+            margin-top: 60px;
+        }
+
+        .footer-box {
+            background: linear-gradient(90deg, #2e8b57 0%, #cfdef3 100%);
+            color: #fff;
+            padding: 18px 0;
+            font-size: 1.2rem;
+            border-radius: 12px 12px 0 0;
+            box-shadow: 0 -2px 12px rgba(46, 139, 87, 0.08);
+            margin-top: 40px;
+            letter-spacing: 1px;
+            margin-top: 145px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!--loader-->
+    <div id="div1">
+        <div id="l" style="margin: 33px">
+            <div class="pupil">
+                <div class="p5">
+                    <div class="pupl2">
+                        <div class="pupil3"></div>
+                        <div class="pupil4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="m" style="margin: 33px">
+            <div class="pupil">
+                <div class="p5">
+                    <div class="pupl2">
+                        <div class="pupil3"></div>
+                        <div class="pupil4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="main-content">
+        <nav>
+            <h1>Welcome to Excel_Automation</h1>
+        </nav>
+        <div class="container">
+            <h2>📤 Upload Excel Files</h2>
+            <form action="/upload" method="POST" enctype="multipart/form-data" id="upload-form">
+
+                <label for="file-upload" class="custom-file-label">Choose Files</label>
+                <input id="file-upload" type="file" name="excel_files[]" multiple style="display: none;">
+                <span id="file-chosen" style="font-size: 14px; color: #333;"></span>
+                <br>
+                <label for="operation">Choose Operation:</label>
+                <select name="operation" id="operation" required>
+                    <option value="merge">Merge</option>
+                    <option value="clean">Clean</option>
+                    <option value="add_total_column">Add Total Column</option>
+                    <option value="format">Format</option>
+                </select>
+                <br><br>
+
+                <button class="animated-button">
+                    <svg viewBox="0 0 24 24" class="arr-2" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z">
+                        </path>
+                    </svg>
+                    <span class="text">upload & process</span>
+                    <span class="circle"></span>
+                    <svg viewBox="0 0 24 24" class="arr-1" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z">
+                        </path>
+                    </svg>
+                </button>
+                </button>
+            </form>
+        </div>
+        <footer style="margin-top: 60px;">
+            <div class="footer-box">
+                🌱 <strong>New Life, New Beginnings!</strong> Every project is a fresh start. Keep building, keep
+                growing. 🚀
+                <p style="margin: 10px 0 0 0; font-size: 1rem; color: #111;">
+                    Hi, you are using Excel Automation project developed by Mahendra Shah. Please enjoy the process!
+                </p>
+            </div>
+        </footer>
+    </div>
+    <script>
+        document.getElementById('file-upload').addEventListener('change', function () {
+            var files = this.files;
+            var fileNames = [];
+            for (var i = 0; i < files.length; i++) {
+                fileNames.push(files[i].name);
+            }
+            document.getElementById('file-chosen').textContent = fileNames.length ? fileNames.join(', ') : '';
+        });
+        // Loader show/hide on form submit
+        document.getElementById('upload-form').addEventListener('submit', function (e) {
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('div1').style.display = 'flex';
+            // Add a short delay to ensure loader is visible before navigation
+            setTimeout(() => {
+                // Let the form submit naturally after the loader is shown
+                // No need to call e.preventDefault() or e.target.submit()
+            }, 100);
+        });
+    </script>
+</body>
+
+</html>

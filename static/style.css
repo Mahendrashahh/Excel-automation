@@ -1,0 +1,39 @@
+body {
+    text-align: center;
+    font-family: sans-serif;
+    background: radial-gradient(black, transparent);
+    background-size: cover;
+}
+
+.container {
+
+    border: solid black 4px;
+    border-radius: 22px;
+    width: 40vw;
+    background: lightblue;
+    margin-inline: auto;
+    margin-top: 92px;
+    height: 230px;
+    padding: 10px;
+}
+
+h2 {
+    margin-bottom: 19px;
+    border: solid white 1px;
+    border-radius: 12px;
+}
+
+#opreation {
+    border-radius: 15px;
+    height: 28px;
+    text-align: center;
+    cursor: pointer;
+    background: antiquewhite;
+}
+.button{
+        padding: 10px 20px;
+    border-radius: 23px;
+    margin-top: 15px;
+    background: aquamarine;
+    border: solid white 2px;
+}

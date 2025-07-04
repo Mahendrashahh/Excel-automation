@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Download Excel File</title>
+    <style>
+        body {
+            position: relative;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 100px;
+            background: linear-gradient(135deg, #2e8b57 0%, #e0eafc 100%, #cfdef3 100%);
+            background-blend-mode: overlay;
+            overflow-x: hidden;
+        }
+
+        /* Optional: add a semi-transparent overlay for readability */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.1);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        nav {
+            background: #2e8b57;
+            color: #fff;
+            padding: 8px 0 4px 0;
+            border-radius: 10px;
+            margin-bottom: 66px;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+            margin-top: -110px;
+            min-height: unset;
+        }
+
+        h1 {
+            background-color: #2e8b57;
+            color: #fff;
+            padding: 0;
+            border-radius: 10px;
+            margin-bottom: 0;
+            margin-top: 0;
+        }
+
+        .box {
+            background-color: white;
+            display: inline-block;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #2e8b57;
+        }
+
+        a button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            background: #2e8b57;
+            border-radius: 19px;
+        }
+
+        a button:hover {
+            background-color: #246b45;
+        }
+
+        footer {
+            margin-top: 200px;
+        }
+
+        .footer-box {
+            background: linear-gradient(90deg, #2e8b57 0%, #cfdef3 100%);
+            color: #fff;
+            padding: 18px 0;
+            font-size: 1.2rem;
+            border-radius: 12px 12px 0 0;
+            box-shadow: 0 -2px 12px rgba(46, 139, 87, 0.08);
+            margin-top: 310px;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <h1>Welcome to Excel_Automation</h1>
+    </nav>
+    <div class="box">
+        <h2>✅ Your Excel File is Ready!</h2>
+
+        <p>You can now download the processed file.</p>
+        <a href="/download?operation={{ operation }}">
+            <button>⬇️ Download Your Excel</button>
+        </a>
+    </div>
+    <footer style="margin-top: 90px;">
+        <div class="footer-box">
+            🌱 <strong>New Life, New Beginnings!</strong> Every project is a fresh start. Keep building, keep growing.
+            🚀
+            <p style="margin: 10px 0 0 0; font-size: 1rem; color: #111;">
+                Hi, you are using Excel Automation project developed by Mahendra Shah. Please enjoy the process!
+            </p>
+        </div>
+    </footer>
+</body>
+
+</html>

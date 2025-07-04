@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+*.env
+output/
+uploads/
+input_files/
+*.sqlite3
+.DS_Store
